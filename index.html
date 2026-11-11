@@ -80,8 +80,9 @@
   }
   .hero h1 {
     font-family: var(--display); font-weight: 800;
-    font-size: clamp(3.75rem, 9.5vw, 7.5rem);
-    line-height: 0.9; letter-spacing: -0.035em; margin: 0 0 24px;
+    font-size: clamp(3rem, 6.5vw, 5rem);
+    line-height: 0.95; letter-spacing: -0.015em; margin: 0 0 24px;
+    overflow-wrap: anywhere;
   }
   .hero p { margin: 0 0 16px; max-width: 34em; }
   .comment { font-family: var(--mono); font-size: 0.9rem; color: var(--ink-soft); }
@@ -98,7 +99,7 @@
   .btn-primary { background: var(--signal); color: #fff; }
 
   /* The monitor, drawn like a dimensioned part */
-  .player { position: relative; padding: 34px 0 0 34px; }
+  .frame { position: relative; padding: 34px 0 0 34px; }
   .dim { position: absolute; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
   .dim-w {
     top: 0; left: 34px; right: 0; height: 22px;
@@ -110,7 +111,7 @@
     border-top: 1.5px solid var(--ink-soft);
   }
   .dim-h {
-    top: 34px; left: 0; bottom: 44px; width: 22px;
+    top: 34px; left: 0; bottom: 0; width: 22px;
     border-top: 1.5px solid var(--ink-soft); border-bottom: 1.5px solid var(--ink-soft);
     display: flex; align-items: center; justify-content: center;
   }
@@ -127,8 +128,8 @@
   }
   .screen iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
   .nowplaying {
-    display: flex; align-items: center; gap: 10px; margin: 0;
-    height: 44px; font-size: 0.9rem; color: var(--ink-soft);
+    display: flex; align-items: baseline; gap: 10px; margin: 22px 0 0 34px;
+    font-size: 0.9rem; line-height: 1.4; color: var(--ink-soft);
   }
   .rec {
     width: 10px; height: 10px; border-radius: 50%; background: var(--signal); flex: none;
@@ -226,7 +227,8 @@
   }
   @media (max-width: 520px) {
     .topnav { gap: 14px; font-size: 0.88rem; }
-    .player { padding: 0; }
+    .frame { padding: 0; }
+    .nowplaying { margin-left: 0; }
     .dim { display: none; }
     .screen { box-shadow: 5px 5px 0 var(--ink); }
     .socials, .row { grid-template-columns: 1fr; }
@@ -266,16 +268,19 @@
     </div>
 
     <div class="player">
+      <div class="frame">
       <div class="dim dim-w" aria-hidden="true"><span>16</span></div>
       <div class="dim dim-h" aria-hidden="true"><span>9</span></div>
       <div class="screen">
         <iframe id="featured"
-          title="Latest video from the BrettRB main channel"
-          src="https://www.youtube.com/embed/videoseries?list=UUkdfyncbicFx46esHVquq9w&autoplay=1&mute=1&playsinline=1&rel=0"
+          title="Featured video from the BrettRB main channel"
+          src="https://www.youtube.com/embed/enDnooRjxOg?autoplay=1&mute=1&playsinline=1&rel=0"
+          referrerpolicy="strict-origin-when-cross-origin"
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowfullscreen></iframe>
       </div>
-      <p class="nowplaying"><span class="rec" aria-hidden="true"></span>Playing from the main channel. It starts muted, so unmute in the player for sound.</p>
+      </div>
+      <p class="nowplaying"><span class="rec" aria-hidden="true"></span>Featured video from the main channel. It starts muted, so unmute in the player for sound.</p>
     </div>
   </section>
 
@@ -387,11 +392,10 @@
 <script>
   /* ---------- Settings you can change ---------- */
 
-  // The player shows the newest upload from the main channel by default.
-  // To pin one specific video instead, paste its ID between the quotes.
+  // The video the player shows. To change it, replace the ID between the quotes.
   // The ID is the part after "v=" in a YouTube link,
   // e.g. youtube.com/watch?v=abc123XYZ00  ->  "abc123XYZ00"
-  const FEATURED_VIDEO_ID = "";
+  const FEATURED_VIDEO_ID = "enDnooRjxOg";
 
   const SPONSOR_EMAIL = "brettrbbusiness@gmail.com";
 
