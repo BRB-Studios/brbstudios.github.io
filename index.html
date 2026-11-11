@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BRB Studios | BrettRB</title>
+<meta name="description" content="BrettRB: gaming videos, streams, clips and vlogs from an engineering student who also writes code. All channels and socials in one place.">
+<meta property="og:title" content="BRB Studios | BrettRB">
+<meta property="og:description" content="Gaming videos, streams, clips and vlogs from an engineering student who also writes code.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --paper: #EEF1DC;      /* engineering computation pad */
+    --grid-minor: #D3DFBE;
+    --grid-major: #B4CB9E;
+    --ink: #16243A;        /* navy drafting ink */
+    --ink-soft: #46546A;
+    --screen: #0F1A2C;     /* the monitor */
+    --signal: #DB3324;     /* record light */
+    --white: #FBFCF4;
+
+    --display: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+    --body: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+    --wrap: 1120px;
+    --line: 2px solid var(--ink);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding-top: 22px; padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--display); font-weight: 800; font-size: 1.25rem;
+    letter-spacing: -0.01em; text-decoration: none;
+  }
+  .topnav { display: flex; gap: 22px; flex-wrap: wrap; font-weight: 500; font-size: 0.95rem; }
+  .topnav a { text-decoration: none; border-bottom: 2px solid transparent; }
+  .topnav a:hover { border-bottom-color: var(--signal); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 56px; align-items: center;
+    padding-top: 40px; padding-bottom: 88px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(3.75rem, 9.5vw, 7.5rem);
+    line-height: 0.9; letter-spacing: -0.035em; margin: 0 0 24px;
+  }
+  .hero p { margin: 0 0 16px; max-width: 34em; }
+  .comment { font-family: var(--mono); font-size: 0.9rem; color: var(--ink-soft); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+  .btn {
+    display: inline-block; font: 600 1rem var(--body); text-decoration: none; cursor: pointer;
+    padding: 12px 20px; border: var(--line); border-radius: 4px;
+    background: var(--white); color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn-primary { background: var(--signal); color: #fff; }
+
+  /* The monitor, drawn like a dimensioned part */
+  .player { position: relative; padding: 34px 0 0 34px; }
+  .dim { position: absolute; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+  .dim-w {
+    top: 0; left: 34px; right: 0; height: 22px;
+    border-left: 1.5px solid var(--ink-soft); border-right: 1.5px solid var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dim-w::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    border-top: 1.5px solid var(--ink-soft);
+  }
+  .dim-h {
+    top: 34px; left: 0; bottom: 44px; width: 22px;
+    border-top: 1.5px solid var(--ink-soft); border-bottom: 1.5px solid var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dim-h::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+    border-left: 1.5px solid var(--ink-soft);
+  }
+  .dim span { position: relative; background: var(--paper); padding: 0 6px; }
+  .dim-h span { writing-mode: vertical-rl; transform: rotate(180deg); padding: 6px 0; }
+
+  .screen {
+    background: var(--screen); border: var(--line); border-radius: 6px;
+    box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
+  }
+  .screen iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+  .nowplaying {
+    display: flex; align-items: center; gap: 10px; margin: 0;
+    height: 44px; font-size: 0.9rem; color: var(--ink-soft);
+  }
+  .rec {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--signal); flex: none;
+    animation: blink 1.6s steps(2, start) infinite;
+  }
+  @keyframes blink { to { visibility: hidden; } }
+
+  /* ---------- Sections ---------- */
+  .section { padding-top: 72px; padding-bottom: 72px; border-top: var(--line); }
+  .section > h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1; letter-spacing: -0.025em;
+    margin: 0 0 12px;
+  }
+  .section > .lede { margin: 0 0 36px; max-width: 38em; color: var(--ink-soft); }
+
+  /* Channels: a parts list */
+  .channels { list-style: none; margin: 0; padding: 0; border: var(--line); border-radius: 6px; background: var(--white); overflow: hidden; }
+  .channels li + li { border-top: var(--line); }
+  .channels a {
+    display: grid; grid-template-columns: 1.1fr 1.2fr 2fr auto; gap: 20px; align-items: baseline;
+    padding: 22px 24px; text-decoration: none;
+    transition: background .12s, color .12s;
+  }
+  .channels a:hover { background: var(--ink); color: var(--white); }
+  .channels a:hover .handle { color: #fff; }
+  .channels a:hover .what { color: #C9D2DF; }
+  .role { font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.015em; }
+  .handle { font-family: var(--mono); font-weight: 500; color: var(--signal); overflow-wrap: anywhere; }
+  .what { color: var(--ink-soft); font-size: 0.98rem; }
+  .go { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+
+  /* Socials */
+  .socials { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .socials a {
+    display: block; padding: 18px 20px; text-decoration: none;
+    background: var(--white); border: var(--line); border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .socials a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--signal); }
+  .socials .name { display: block; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
+  .socials .handle { font-size: 0.9rem; }
+
+  /* Sponsors */
+  .sponsor { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
+  .sponsor h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1; letter-spacing: -0.025em; margin: 0 0 16px;
+  }
+  .sponsor p { margin: 0 0 16px; max-width: 30em; }
+  .mail { font-family: var(--mono); font-weight: 500; overflow-wrap: anywhere; }
+  .copy {
+    font: 500 0.85rem var(--body); margin-left: 8px; padding: 4px 10px; cursor: pointer;
+    background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px;
+  }
+  .copy:hover { background: var(--ink); color: var(--white); }
+
+  form { background: var(--white); border: var(--line); border-radius: 6px; box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { margin-bottom: 18px; }
+  label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  input, textarea {
+    width: 100%; font: 400 1rem var(--body); color: var(--ink);
+    padding: 11px 12px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px;
+  }
+  textarea { min-height: 140px; resize: vertical; }
+  .form-note { margin: 14px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+  .form-status { margin: 14px 0 0; font-size: 0.92rem; font-weight: 500; min-height: 1.4em; }
+
+  /* ---------- Title block footer ---------- */
+  footer { padding-top: 48px; padding-bottom: 56px; }
+  .titleblock {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; margin-left: auto; max-width: 720px;
+    border: var(--line); background: var(--white); font-size: 0.9rem;
+  }
+  .titleblock div { padding: 10px 14px; }
+  .titleblock div + div { border-left: var(--line); }
+  .titleblock dt { font-size: 0.75rem; color: var(--ink-soft); }
+  .titleblock dd { margin: 2px 0 0; font-family: var(--mono); font-weight: 500; }
+  .titleblock .big { font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+  dl { margin: 0; }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 860px) {
+    .hero, .sponsor { grid-template-columns: 1fr; gap: 40px; }
+    .hero { padding-top: 16px; padding-bottom: 56px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .channels a { grid-template-columns: 1fr; gap: 4px; padding: 18px 20px; }
+    .go { display: none; }
+    .socials { grid-template-columns: 1fr 1fr; }
+    .titleblock { grid-template-columns: 1fr 1fr; }
+    .titleblock div:nth-child(3) { border-left: 0; }
+    .titleblock div:nth-child(n+3) { border-top: var(--line); }
+  }
+  @media (max-width: 520px) {
+    .topnav { gap: 14px; font-size: 0.88rem; }
+    .player { padding: 0; }
+    .dim { display: none; }
+    .screen { box-shadow: 5px 5px 0 var(--ink); }
+    .socials, .row { grid-template-columns: 1fr; }
+    form { padding: 20px; box-shadow: 5px 5px 0 var(--ink); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rec { animation: none; }
+    .btn, .socials a, .channels a { transition: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="wrap topbar">
+  <a class="wordmark" href="#top">BRB Studios</a>
+  <nav class="topnav" aria-label="Sections">
+    <a href="#channels">Channels</a>
+    <a href="#socials">Socials</a>
+    <a href="#sponsors">Sponsors</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- Hero: intro + autoplaying video -->
+  <section class="wrap hero">
+    <div>
+      <h1>BrettRB</h1>
+      <p>Gaming videos, streams, clips and vlogs from a college student who spends the rest of the week on engineering homework and code.</p>
+      <p class="comment">// builds things in class, breaks things on stream</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://www.youtube.com/@BrettRB?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <a class="btn" href="https://discord.gg/6S4Mvb6u7n" target="_blank" rel="noopener">Join the Discord</a>
+      </div>
+    </div>
+
+    <div class="player">
+      <div class="dim dim-w" aria-hidden="true"><span>16</span></div>
+      <div class="dim dim-h" aria-hidden="true"><span>9</span></div>
+      <div class="screen">
+        <iframe id="featured"
+          title="Latest video from the BrettRB main channel"
+          src="https://www.youtube.com/embed/videoseries?list=UUkdfyncbicFx46esHVquq9w&autoplay=1&mute=1&playsinline=1&rel=0"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowfullscreen></iframe>
+      </div>
+      <p class="nowplaying"><span class="rec" aria-hidden="true"></span>Playing from the main channel. It starts muted, so unmute in the player for sound.</p>
+    </div>
+  </section>
+
+  <!-- Channels -->
+  <section class="wrap section" id="channels">
+    <h2>Four channels, one Brett</h2>
+    <p class="lede">Pick the one that fits how much time you have.</p>
+
+    <ul class="channels">
+      <li>
+        <a href="https://www.youtube.com/@BrettRB" target="_blank" rel="noopener">
+          <span class="role">Main channel</span>
+          <span class="handle">@BrettRB</span>
+          <span class="what">The finished, edited videos. Start here.</span>
+          <span class="go">Open channel</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@brettrb_vods" target="_blank" rel="noopener">
+          <span class="role">VOD channel</span>
+          <span class="handle">@BrettRB_VODs</span>
+          <span class="what">Full stream replays, start to finish.</span>
+          <span class="go">Open channel</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@brettrb_clips" target="_blank" rel="noopener">
+          <span class="role">Clips channel</span>
+          <span class="handle">@BrettRB_Clips</span>
+          <span class="what">The best moments, cut short.</span>
+          <span class="go">Open channel</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.youtube.com/@BrettRBVlog" target="_blank" rel="noopener">
+          <span class="role">Vlog channel</span>
+          <span class="handle">@BrettRBVlog</span>
+          <span class="what">Life away from the game: school, projects and everything else.</span>
+          <span class="go">Open channel</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Socials -->
+  <section class="wrap section" id="socials">
+    <h2>Everywhere else</h2>
+    <p class="lede">Live streams, short posts, the community server and the code.</p>
+
+    <ul class="socials">
+      <li><a href="https://www.twitch.tv/brettrb04" target="_blank" rel="noopener"><span class="name">Twitch</span><span class="handle">brettrb04</span></a></li>
+      <li><a href="https://www.instagram.com/brettrb04/" target="_blank" rel="noopener"><span class="name">Instagram</span><span class="handle">@brettrb04</span></a></li>
+      <li><a href="https://twitter.com/BrettRB34" target="_blank" rel="noopener"><span class="name">X</span><span class="handle">@BrettRB34</span></a></li>
+      <li><a href="https://www.tiktok.com/@brettrb" target="_blank" rel="noopener"><span class="name">TikTok</span><span class="handle">@brettrb</span></a></li>
+      <li><a href="https://discord.gg/6S4Mvb6u7n" target="_blank" rel="noopener"><span class="name">Discord</span><span class="handle">Join the server</span></a></li>
+      <li><a href="https://github.com/BrettRB" target="_blank" rel="noopener"><span class="name">GitHub</span><span class="handle">BrettRB</span></a></li>
+    </ul>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="wrap section" id="sponsors">
+    <div class="sponsor">
+      <div>
+        <h2>Sponsor a video</h2>
+        <p>Have a game, product or tool that fits the channel? Tell me what you have in mind and I'll get back to you.</p>
+        <p>
+          <a class="mail" href="mailto:brettrbbusiness@gmail.com">brettrbbusiness@gmail.com</a>
+          <button class="copy" type="button" id="copy">Copy</button>
+        </p>
+      </div>
+
+      <form id="sponsor-form">
+        <div class="row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="brand">Company or brand</label>
+            <input id="brand" name="brand" type="text" autocomplete="organization" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email to reply to</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="message">What you have in mind</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Open email draft</button>
+        <p class="form-note">This opens a ready-to-send draft in your email app. Nothing is sent until you press send there.</p>
+        <p class="form-status" id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <dl class="titleblock">
+    <div><dt>Project</dt><dd class="big">BRB Studios</dd></div>
+    <div><dt>Drawn by</dt><dd>BrettRB</dd></div>
+    <div><dt>Sheet</dt><dd>1 of 1</dd></div>
+    <div><dt>Rev</dt><dd id="year">2026</dd></div>
+  </dl>
+</footer>
+
+<script>
+  /* ---------- Settings you can change ---------- */
+
+  // The player shows the newest upload from the main channel by default.
+  // To pin one specific video instead, paste its ID between the quotes.
+  // The ID is the part after "v=" in a YouTube link,
+  // e.g. youtube.com/watch?v=abc123XYZ00  ->  "abc123XYZ00"
+  const FEATURED_VIDEO_ID = "";
+
+  const SPONSOR_EMAIL = "brettrbbusiness@gmail.com";
+
+  /* ---------- Featured video ---------- */
+  if (FEATURED_VIDEO_ID) {
+    document.getElementById("featured").src =
+      "https://www.youtube.com/embed/" + FEATURED_VIDEO_ID +
+      "?autoplay=1&mute=1&playsinline=1&rel=0";
+  }
+
+  /* ---------- Sponsor form: builds an email draft ---------- */
+  const form = document.getElementById("sponsor-form");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const d = new FormData(form);
+    const subject = "Sponsorship inquiry from " + d.get("brand");
+    const body =
+      "Name: " + d.get("name") + "\n" +
+      "Company or brand: " + d.get("brand") + "\n" +
+      "Reply to: " + d.get("email") + "\n\n" +
+      d.get("message");
+    window.location.href = "mailto:" + SPONSOR_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+    status.textContent = "Email draft opened. If nothing appeared, write to " + SPONSOR_EMAIL + " directly.";
+  });
+
+  /* ---------- Copy email address ---------- */
+  const copyBtn = document.getElementById("copy");
+  copyBtn.addEventListener("click", function () {
+    if (!navigator.clipboard) { copyBtn.textContent = "Select the address to copy"; return; }
+    navigator.clipboard.writeText(SPONSOR_EMAIL).then(
+      function () { copyBtn.textContent = "Copied"; setTimeout(function () { copyBtn.textContent = "Copy"; }, 2000); },
+      function () { copyBtn.textContent = "Select the address to copy"; }
+    );
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
