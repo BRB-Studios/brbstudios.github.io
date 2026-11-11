@@ -127,8 +127,8 @@
     box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
   }
   .screen iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
-  .nowplaying {
-    display: flex; align-items: baseline; gap: 10px; margin: 22px 0 0 34px;
+  .player .nowplaying {
+    display: flex; align-items: baseline; gap: 10px; margin: 28px 0 0 34px; max-width: none;
     font-size: 0.9rem; line-height: 1.4; color: var(--ink-soft);
   }
   .rec {
@@ -197,8 +197,8 @@
     padding: 11px 12px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px;
   }
   textarea { min-height: 140px; resize: vertical; }
-  .form-note { margin: 14px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
-  .form-status { margin: 14px 0 0; font-size: 0.92rem; font-weight: 500; min-height: 1.4em; }
+  form .form-note { margin: 26px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+  form .form-status { margin: 12px 0 0; font-size: 0.92rem; font-weight: 500; min-height: 1.4em; }
 
   /* ---------- Title block footer ---------- */
   footer { padding-top: 48px; padding-bottom: 56px; }
@@ -228,7 +228,7 @@
   @media (max-width: 520px) {
     .topnav { gap: 14px; font-size: 0.88rem; }
     .frame { padding: 0; }
-    .nowplaying { margin-left: 0; }
+    .player .nowplaying { margin-left: 0; }
     .dim { display: none; }
     .screen { box-shadow: 5px 5px 0 var(--ink); }
     .socials, .row { grid-template-columns: 1fr; }
