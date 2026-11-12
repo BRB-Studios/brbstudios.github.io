@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sponsors | BRB Studios</title>
+<meta name="description" content="Sponsor a BrettRB video: audience numbers and how to get in touch.">
+<meta property="og:title" content="BRB Studios | BrettRB">
+<meta property="og:description" content="Gaming videos, streams, clips and vlogs from an engineering student who also writes code.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="favicon.png?v=2">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --paper: #EEF1DC;      /* engineering computation pad */
+    --grid-minor: #D3DFBE;
+    --grid-major: #B4CB9E;
+    --ink: #16243A;        /* navy drafting ink */
+    --ink-soft: #46546A;
+    --screen: #0F1A2C;     /* the monitor */
+    --signal: #DB3324;     /* record light */
+    --white: #FBFCF4;
+
+    --display: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+    --body: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+    --wrap: 1120px;
+    --line: 2px solid var(--ink);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding-top: 22px; padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--display); font-weight: 800; font-size: 1.25rem;
+    letter-spacing: -0.01em; text-decoration: none; white-space: nowrap;
+  }
+  .topnav { display: flex; gap: 22px; flex-wrap: wrap; font-weight: 500; font-size: 0.95rem; }
+  .topnav a { text-decoration: none; border-bottom: 2px solid transparent; }
+  .topnav a:hover { border-bottom-color: var(--signal); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 56px; align-items: center;
+    padding-top: 40px; padding-bottom: 88px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(3rem, 6.5vw, 5rem);
+    line-height: 0.95; letter-spacing: -0.015em; margin: 0 0 24px;
+    overflow-wrap: anywhere;
+  }
+  .hero p { margin: 0 0 16px; max-width: 34em; }
+  .comment { font-family: var(--mono); font-size: 0.9rem; color: var(--ink-soft); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+  .btn {
+    display: inline-block; font: 600 1rem var(--body); text-decoration: none; cursor: pointer;
+    padding: 12px 20px; border: var(--line); border-radius: 4px;
+    background: var(--white); color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn-primary { background: var(--signal); color: #fff; }
+
+  /* The monitor, drawn like a dimensioned part */
+  .frame { position: relative; padding: 34px 0 0 34px; }
+  .dim { position: absolute; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+  .dim-w {
+    top: 0; left: 34px; right: 0; height: 22px;
+    border-left: 1.5px solid var(--ink-soft); border-right: 1.5px solid var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dim-w::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    border-top: 1.5px solid var(--ink-soft);
+  }
+  .dim-h {
+    top: 34px; left: 0; bottom: 0; width: 22px;
+    border-top: 1.5px solid var(--ink-soft); border-bottom: 1.5px solid var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dim-h::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+    border-left: 1.5px solid var(--ink-soft);
+  }
+  .dim span { position: relative; background: var(--paper); padding: 0 6px; }
+  .dim-h span { writing-mode: vertical-rl; transform: rotate(180deg); padding: 6px 0; }
+
+  .screen {
+    background: var(--screen); border: var(--line); border-radius: 6px;
+    box-shadow: 8px 8px 0 var(--ink); overflow: hidden;
+  }
+  .screen iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+  .player .nowplaying {
+    display: flex; align-items: baseline; gap: 10px; margin: 28px 0 0 34px; max-width: none;
+    font-size: 0.9rem; line-height: 1.4; color: var(--ink-soft);
+  }
+  .rec {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--signal); flex: none;
+    animation: blink 1.6s steps(2, start) infinite;
+  }
+  @keyframes blink { to { visibility: hidden; } }
+
+  /* ---------- Sections ---------- */
+  .section { padding-top: 72px; padding-bottom: 72px; border-top: var(--line); }
+  .section > h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1; letter-spacing: -0.025em;
+    margin: 0 0 12px;
+  }
+  .section > .lede { margin: 0 0 36px; max-width: 38em; color: var(--ink-soft); }
+
+  /* Channels: a parts list */
+  .channels { list-style: none; margin: 0; padding: 0; border: var(--line); border-radius: 6px; background: var(--white); overflow: hidden; }
+  .channels li + li { border-top: var(--line); }
+  .channels a {
+    display: grid; grid-template-columns: 1.1fr 1.2fr 2fr auto; gap: 20px; align-items: baseline;
+    padding: 22px 24px; text-decoration: none;
+    transition: background .12s, color .12s;
+  }
+  .channels a:hover { background: var(--ink); color: var(--white); }
+  .channels a:hover .handle { color: #fff; }
+  .channels a:hover .what { color: #C9D2DF; }
+  .role { font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.015em; }
+  .handle { font-family: var(--mono); font-weight: 500; color: var(--signal); overflow-wrap: anywhere; }
+  .what { color: var(--ink-soft); font-size: 0.98rem; }
+  .go { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+
+  /* Socials */
+  .socials { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .socials a {
+    display: block; padding: 18px 20px; text-decoration: none;
+    background: var(--white); border: var(--line); border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .socials a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--signal); }
+  .socials .name { display: block; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
+  .socials .handle { font-size: 0.9rem; }
+
+  /* Instagram */
+  .insta { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .insta a {
+    display: block; height: 100%; text-decoration: none;
+    background: var(--white); border: var(--line); border-radius: 4px; overflow: hidden;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .insta a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--signal); }
+  .insta img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-bottom: var(--line); background: var(--grid-minor); }
+  .insta .meta { padding: 14px 16px 16px; }
+  .insta time { display: block; font-family: var(--mono); font-size: 0.82rem; color: var(--signal); margin-bottom: 6px; }
+  .insta .cap { margin: 0; font-size: 0.95rem; line-height: 1.45; color: var(--ink-soft); }
+  .insta-more { margin: 28px 0 0; }
+
+  /* Sponsors */
+  .sponsor { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
+  .sponsor h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1; letter-spacing: -0.025em; margin: 0 0 16px;
+  }
+  .sponsor p { margin: 0 0 16px; max-width: 30em; }
+  .mail { font-family: var(--mono); font-weight: 500; overflow-wrap: anywhere; }
+  .copy {
+    font: 500 0.85rem var(--body); margin-left: 8px; padding: 4px 10px; cursor: pointer;
+    background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px;
+  }
+  .copy:hover { background: var(--ink); color: var(--white); }
+
+  form { background: var(--white); border: var(--line); border-radius: 6px; box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { margin-bottom: 18px; }
+  label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  input, textarea {
+    width: 100%; font: 400 1rem var(--body); color: var(--ink);
+    padding: 11px 12px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px;
+  }
+  textarea { min-height: 140px; resize: vertical; }
+  form .form-note { margin: 26px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+  form .form-status { margin: 12px 0 0; font-size: 0.92rem; font-weight: 500; min-height: 1.4em; }
+
+  /* ---------- Title block footer ---------- */
+  footer { padding-top: 48px; padding-bottom: 56px; }
+  .titleblock {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; margin-left: auto; max-width: 600px;
+    border: var(--line); background: var(--white); font-size: 0.9rem;
+  }
+  .titleblock div { padding: 10px 14px; }
+  .titleblock div + div { border-left: var(--line); }
+  .titleblock dt { font-size: 0.75rem; color: var(--ink-soft); }
+  .titleblock dd { margin: 2px 0 0; font-family: var(--mono); font-weight: 500; }
+  .titleblock .big { font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+  dl { margin: 0; }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 860px) {
+    .hero, .sponsor { grid-template-columns: 1fr; gap: 40px; }
+    .hero { padding-top: 16px; padding-bottom: 56px; }
+    .section { padding-top: 52px; padding-bottom: 52px; }
+    .channels a { grid-template-columns: 1fr; gap: 4px; padding: 18px 20px; }
+    .go { display: none; }
+    .socials { grid-template-columns: 1fr 1fr; }
+    .insta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .titleblock { grid-template-columns: 1fr 1fr; }
+    .titleblock div:nth-child(1) { grid-column: 1 / -1; }
+    .titleblock div:nth-child(2) { border-left: 0; }
+    .titleblock div:nth-child(n+2) { border-top: var(--line); }
+  }
+  @media (max-width: 520px) {
+    .topnav { gap: 14px; font-size: 0.88rem; }
+    .frame { padding: 0; }
+    .player .nowplaying { margin-left: 0; }
+    .dim { display: none; }
+    .screen { box-shadow: 5px 5px 0 var(--ink); }
+    .socials, .row, .insta { grid-template-columns: minmax(0, 1fr); }
+    form { padding: 20px; box-shadow: 5px 5px 0 var(--ink); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rec { animation: none; }
+    .btn, .socials a, .channels a { transition: none; }
+  }
+
+  /* ---------- Sponsors page ---------- */
+  .topnav a[aria-current="page"] { border-bottom-color: var(--signal); }
+  .page-head { padding-top: 40px; padding-bottom: 48px; }
+  .page-head h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(3rem, 6.5vw, 5rem); line-height: 0.95; letter-spacing: -0.015em; margin: 0 0 16px;
+  }
+  .page-head p { margin: 0; max-width: 36em; color: var(--ink-soft); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    border: var(--line); border-radius: 6px; background: var(--white); overflow: hidden;
+    box-shadow: 8px 8px 0 var(--ink); margin: 0;
+  }
+  .stat { padding: 22px 24px; border-left: var(--line); margin-left: -2px; }
+  .stat[hidden] { display: none; }
+  .stat dt { font-size: 0.92rem; font-weight: 600; color: var(--ink-soft); }
+  .stat dd {
+    margin: 4px 0 0; font-family: var(--display); font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-total { background: var(--ink); color: var(--white); }
+  .stat-total dt { color: #C9D2DF; }
+  .stats-note { margin: 22px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+  .stats-wrap { padding-bottom: 72px; }
+  .stats-wrap[hidden] { display: none; }
+  @media (max-width: 520px) {
+    .stat { border-left: 0; margin-left: 0; border-top: var(--line); margin-top: -2px; }
+    .stats { box-shadow: 5px 5px 0 var(--ink); }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="wrap topbar">
+  <a class="wordmark" href="index.html">BRB Studios</a>
+  <nav class="topnav" aria-label="Sections">
+    <a href="index.html#channels">Channels</a>
+    <a href="index.html#socials">Socials</a>
+    <a href="sponsors.html" aria-current="page">Sponsors</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap page-head">
+    <h1>Work with BrettRB</h1>
+    <p>Gaming videos, streams and vlogs from an engineering student, posted daily on YouTube. Here's who's watching and how to reach me.</p>
+  </section>
+
+  <section class="wrap stats-wrap" id="stats" hidden>
+    <dl class="stats">
+      <div class="stat stat-total" id="stat-total" hidden><dt>Combined audience</dt><dd id="num-total"></dd></div>
+      <div class="stat" id="stat-yt" hidden><dt>YouTube subscribers</dt><dd id="num-yt"></dd></div>
+      <div class="stat" id="stat-ytviews" hidden><dt>YouTube channel views</dt><dd id="num-ytviews"></dd></div>
+      <div class="stat" id="stat-ig" hidden><dt>Instagram followers</dt><dd id="num-ig"></dd></div>
+    </dl>
+    <p class="stats-note">These numbers update automatically from YouTube and Instagram.</p>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="wrap section" id="sponsors">
+    <div class="sponsor">
+      <div>
+        <h2>Sponsor a video</h2>
+        <p>Have a game, product or tool that fits the channel? Tell me what you have in mind and I'll get back to you.</p>
+        <p>
+          <a class="mail" href="mailto:brettrbbusiness@gmail.com">brettrbbusiness@gmail.com</a>
+          <button class="copy" type="button" id="copy">Copy</button>
+        </p>
+      </div>
+
+      <form id="sponsor-form">
+        <div class="row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="brand">Company or brand</label>
+            <input id="brand" name="brand" type="text" autocomplete="organization" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email to reply to</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="message">What you have in mind</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Open email draft</button>
+        <p class="form-note" style="margin-top:30px">This opens a ready-to-send draft in your email app. Nothing is sent until you press send there.</p>
+        <p class="form-status" id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <dl class="titleblock">
+    <div style="display:flex;align-items:center"><dd class="big" style="margin:0">BRB Studios</dd></div>
+    <div><dt>Drawn by</dt><dd>BrettRB</dd></div>
+    <div><dt>Sheet</dt><dd>1 of 1</dd></div>
+  </dl>
+</footer>
+
+<script>
+  /* ---------- Settings ---------- */
+  const SPONSOR_EMAIL = "brettrbbusiness@gmail.com";
+
+  // Paste your YouTube Data API key between the quotes to show YouTube numbers.
+  const YOUTUBE_API_KEY = "AIzaSyBYs0PzPfaGaTWhGdtZ2HECPbcTz6_G7pg";
+  const YOUTUBE_CHANNEL_ID = "UCkdfyncbicFx46esHVquq9w";   // @BrettRB main channel
+  const INSTAGRAM_FEED_URL = "https://feeds.behold.so/jq90YEpsYm4bdqMCu7Df";
+
+  /* ---------- Live audience numbers ---------- */
+  const fmt = function (n) { return Number(n).toLocaleString("en-US"); };
+  function show(id, value) {
+    document.getElementById("num-" + id).textContent = fmt(value);
+    document.getElementById("stat-" + id).hidden = false;
+    document.getElementById("stats").hidden = false;
+  }
+
+  const youtube = YOUTUBE_API_KEY
+    ? fetch("https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" +
+            YOUTUBE_CHANNEL_ID + "&key=" + YOUTUBE_API_KEY)
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (data) {
+          const st = data.items && data.items[0] && data.items[0].statistics;
+          if (!st) return null;
+          if (st.viewCount) show("ytviews", st.viewCount);
+          if (st.hiddenSubscriberCount || !st.subscriberCount) return null;
+          show("yt", st.subscriberCount);
+          return Number(st.subscriberCount);
+        })
+        .catch(function () { return null; })
+    : Promise.resolve(null);
+
+  const instagram = fetch(INSTAGRAM_FEED_URL)
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (feed) {
+      if (typeof feed.followersCount !== "number") return null;
+      show("ig", feed.followersCount);
+      return feed.followersCount;
+    })
+    .catch(function () { return null; });
+
+  // The combined number only appears when both counts loaded.
+  Promise.all([youtube, instagram]).then(function (counts) {
+    if (counts[0] !== null && counts[1] !== null) show("total", counts[0] + counts[1]);
+  });
+
+  /* ---------- Sponsor form: builds an email draft ---------- */
+  const form = document.getElementById("sponsor-form");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const d = new FormData(form);
+    const subject = "Sponsorship inquiry from " + d.get("brand");
+    const body =
+      "Name: " + d.get("name") + "\n" +
+      "Company or brand: " + d.get("brand") + "\n" +
+      "Reply to: " + d.get("email") + "\n\n" +
+      d.get("message");
+    window.location.href = "mailto:" + SPONSOR_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+    status.textContent = "Email draft opened. If nothing appeared, write to " + SPONSOR_EMAIL + " directly.";
+  });
+
+  /* ---------- Copy email address ---------- */
+  const copyBtn = document.getElementById("copy");
+  copyBtn.addEventListener("click", function () {
+    if (!navigator.clipboard) { copyBtn.textContent = "Select the address to copy"; return; }
+    navigator.clipboard.writeText(SPONSOR_EMAIL).then(
+      function () { copyBtn.textContent = "Copied"; setTimeout(function () { copyBtn.textContent = "Copy"; }, 2000); },
+      function () { copyBtn.textContent = "Select the address to copy"; }
+    );
+  });
+
+</script>
+</body>
+</html>

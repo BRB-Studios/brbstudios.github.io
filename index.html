@@ -268,7 +268,7 @@
   <nav class="topnav" aria-label="Sections">
     <a href="#channels">Channels</a>
     <a href="#socials">Socials</a>
-    <a href="#sponsors">Sponsors</a>
+    <a href="sponsors.html">Sponsors</a>
     <a href="faq.html">FAQ</a>
   </nav>
 </header>
@@ -369,44 +369,6 @@
     <p class="insta-more"><a class="btn" href="https://www.instagram.com/brettrb04/" target="_blank" rel="noopener">See more on Instagram</a></p>
   </section>
 
-  <!-- Sponsors -->
-  <section class="wrap section" id="sponsors">
-    <div class="sponsor">
-      <div>
-        <h2>Sponsor a video</h2>
-        <p>Have a game, product or tool that fits the channel? Tell me what you have in mind and I'll get back to you.</p>
-        <p>
-          <a class="mail" href="mailto:brettrbbusiness@gmail.com">brettrbbusiness@gmail.com</a>
-          <button class="copy" type="button" id="copy">Copy</button>
-        </p>
-      </div>
-
-      <form id="sponsor-form">
-        <div class="row">
-          <div class="field">
-            <label for="name">Your name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="brand">Company or brand</label>
-            <input id="brand" name="brand" type="text" autocomplete="organization" required>
-          </div>
-        </div>
-        <div class="field">
-          <label for="email">Email to reply to</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="field">
-          <label for="message">What you have in mind</label>
-          <textarea id="message" name="message" required></textarea>
-        </div>
-        <button class="btn btn-primary" type="submit">Open email draft</button>
-        <p class="form-note" style="margin-top:30px">This opens a ready-to-send draft in your email app. Nothing is sent until you press send there.</p>
-        <p class="form-status" id="status" role="status"></p>
-      </form>
-    </div>
-  </section>
-
 </main>
 
 <footer class="wrap">
@@ -423,8 +385,6 @@
   // Featured videos are set in the file featured.txt (one YouTube link per line).
   // This ID is only used if featured.txt is missing or can't be read.
   const FALLBACK_VIDEO_ID = "enDnooRjxOg";
-
-  const SPONSOR_EMAIL = "brettrbbusiness@gmail.com";
 
   /* ---------- Featured video ---------- */
   function videoIdFrom(text) {
@@ -493,35 +453,6 @@
       document.getElementById("instagram").hidden = false;
     })
     .catch(function () { /* feed unavailable: section stays hidden */ });
-
-  /* ---------- Sponsor form: builds an email draft ---------- */
-  const form = document.getElementById("sponsor-form");
-  const status = document.getElementById("status");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const d = new FormData(form);
-    const subject = "Sponsorship inquiry from " + d.get("brand");
-    const body =
-      "Name: " + d.get("name") + "\n" +
-      "Company or brand: " + d.get("brand") + "\n" +
-      "Reply to: " + d.get("email") + "\n\n" +
-      d.get("message");
-    window.location.href = "mailto:" + SPONSOR_EMAIL +
-      "?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-    status.textContent = "Email draft opened. If nothing appeared, write to " + SPONSOR_EMAIL + " directly.";
-  });
-
-  /* ---------- Copy email address ---------- */
-  const copyBtn = document.getElementById("copy");
-  copyBtn.addEventListener("click", function () {
-    if (!navigator.clipboard) { copyBtn.textContent = "Select the address to copy"; return; }
-    navigator.clipboard.writeText(SPONSOR_EMAIL).then(
-      function () { copyBtn.textContent = "Copied"; setTimeout(function () { copyBtn.textContent = "Copy"; }, 2000); },
-      function () { copyBtn.textContent = "Select the address to copy"; }
-    );
-  });
 
 </script>
 </body>
