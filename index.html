@@ -205,7 +205,7 @@
   /* ---------- Title block footer ---------- */
   footer { padding-top: 48px; padding-bottom: 56px; }
   .titleblock {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; margin-left: auto; max-width: 720px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; margin-left: auto; max-width: 600px;
     border: var(--line); background: var(--white); font-size: 0.9rem;
   }
   .titleblock div { padding: 10px 14px; }
@@ -224,8 +224,9 @@
     .go { display: none; }
     .socials { grid-template-columns: 1fr 1fr; }
     .titleblock { grid-template-columns: 1fr 1fr; }
-    .titleblock div:nth-child(3) { border-left: 0; }
-    .titleblock div:nth-child(n+3) { border-top: var(--line); }
+    .titleblock div:nth-child(1) { grid-column: 1 / -1; }
+    .titleblock div:nth-child(2) { border-left: 0; }
+    .titleblock div:nth-child(n+2) { border-top: var(--line); }
   }
   @media (max-width: 520px) {
     .topnav { gap: 14px; font-size: 0.88rem; }
@@ -387,14 +388,13 @@
     <div style="display:flex;align-items:center"><dd class="big" style="margin:0">BRB Studios</dd></div>
     <div><dt>Drawn by</dt><dd>BrettRB</dd></div>
     <div><dt>Sheet</dt><dd>1 of 1</dd></div>
-    <div><dt>Rev</dt><dd>8</dd></div>
   </dl>
 </footer>
 
 <script>
   /* ---------- Settings ---------- */
 
-  // The featured video is set in the file featured.txt (paste a YouTube link there).
+  // Featured videos are set in the file featured.txt (one YouTube link per line).
   // This ID is only used if featured.txt is missing or can't be read.
   const FALLBACK_VIDEO_ID = "enDnooRjxOg";
 
@@ -409,8 +409,12 @@
     return null;
   }
 
-  function showVideo(id) {
-    const src = "https://www.youtube.com/embed/" + id + "?autoplay=1&mute=1&playsinline=1&rel=0";
+  // One video: it just plays. Several: start on a random one, then play the rest in order.
+  function showVideos(ids) {
+    const start = Math.floor(Math.random() * ids.length);
+    const order = ids.slice(start).concat(ids.slice(0, start));
+    let src = "https://www.youtube.com/embed/" + order[0] + "?autoplay=1&mute=1&playsinline=1&rel=0";
+    if (order.length > 1) src += "&loop=1&playlist=" + order.slice(1).join(",");
     const player = document.getElementById("featured");
     if (player.src !== src) player.src = src;
   }
@@ -418,10 +422,14 @@
   fetch("featured.txt", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.text() : ""; })
     .then(function (text) {
-      const line = text.split(/\r?\n/).find(function (l) { return videoIdFrom(l); });
-      showVideo(videoIdFrom(line) || FALLBACK_VIDEO_ID);
+      const ids = [];
+      text.split(/\r?\n/).forEach(function (line) {
+        const id = videoIdFrom(line);
+        if (id && ids.indexOf(id) === -1) ids.push(id);
+      });
+      showVideos(ids.length ? ids : [FALLBACK_VIDEO_ID]);
     })
-    .catch(function () { showVideo(FALLBACK_VIDEO_ID); });
+    .catch(function () { showVideos([FALLBACK_VIDEO_ID]); });
 
   /* ---------- Sponsor form: builds an email draft ---------- */
   const form = document.getElementById("sponsor-form");
