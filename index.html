@@ -176,6 +176,21 @@
   .socials .name { display: block; font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.01em; }
   .socials .handle { font-size: 0.9rem; }
 
+  /* Instagram */
+  .insta { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .insta a {
+    display: block; height: 100%; text-decoration: none;
+    background: var(--white); border: var(--line); border-radius: 4px; overflow: hidden;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .insta a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--signal); }
+  .insta img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-bottom: var(--line); background: var(--grid-minor); }
+  .insta .meta { padding: 14px 16px 16px; }
+  .insta time { display: block; font-family: var(--mono); font-size: 0.82rem; color: var(--signal); margin-bottom: 6px; }
+  .insta .cap { margin: 0; font-size: 0.95rem; line-height: 1.45; color: var(--ink-soft); }
+  .insta-more { margin: 28px 0 0; }
+
   /* Sponsors */
   .sponsor { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
   .sponsor h2 {
@@ -223,6 +238,7 @@
     .channels a { grid-template-columns: 1fr; gap: 4px; padding: 18px 20px; }
     .go { display: none; }
     .socials { grid-template-columns: 1fr 1fr; }
+    .insta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .titleblock { grid-template-columns: 1fr 1fr; }
     .titleblock div:nth-child(1) { grid-column: 1 / -1; }
     .titleblock div:nth-child(2) { border-left: 0; }
@@ -234,7 +250,7 @@
     .player .nowplaying { margin-left: 0; }
     .dim { display: none; }
     .screen { box-shadow: 5px 5px 0 var(--ink); }
-    .socials, .row { grid-template-columns: 1fr; }
+    .socials, .row, .insta { grid-template-columns: minmax(0, 1fr); }
     form { padding: 20px; box-shadow: 5px 5px 0 var(--ink); }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -345,6 +361,14 @@
     </ul>
   </section>
 
+  <!-- Instagram -->
+  <section class="wrap section" id="instagram" hidden>
+    <h2>Latest on Instagram</h2>
+    <p class="lede">The three newest posts from @brettrb04.</p>
+    <ul class="insta" id="insta-posts"></ul>
+    <p class="insta-more"><a class="btn" href="https://www.instagram.com/brettrb04/" target="_blank" rel="noopener">See more on Instagram</a></p>
+  </section>
+
   <!-- Sponsors -->
   <section class="wrap section" id="sponsors">
     <div class="sponsor">
@@ -432,6 +456,43 @@
       showVideos(ids.length ? ids : [FALLBACK_VIDEO_ID]);
     })
     .catch(function () { showVideos([FALLBACK_VIDEO_ID]); });
+
+  /* ---------- Instagram posts (from Behold) ---------- */
+  const INSTAGRAM_FEED_URL = "https://feeds.behold.so/jq90YEpsYm4bdqMCu7Df";
+  const INSTAGRAM_POST_COUNT = 3;
+
+  function shortCaption(text, max) {
+    const first = (text || "").split(/\n/)[0].trim();
+    if (first.length <= max) return first;
+    return first.slice(0, first.lastIndexOf(" ", max)).replace(/[\s,.;:]+$/, "") + "\u2026";
+  }
+
+  fetch(INSTAGRAM_FEED_URL)
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (feed) {
+      const posts = (feed.posts || []).filter(function (p) { return p.sizes && p.sizes.medium; })
+        .slice(0, INSTAGRAM_POST_COUNT);
+      if (!posts.length) return;
+      const list = document.getElementById("insta-posts");
+      posts.forEach(function (p) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = p.permalink; a.target = "_blank"; a.rel = "noopener";
+        const img = document.createElement("img");
+        img.src = p.sizes.medium.mediaUrl; img.loading = "lazy"; img.width = 700; img.height = 700;
+        const cap = shortCaption(p.prunedCaption || p.caption, 110);
+        img.alt = cap || "Instagram post";
+        const meta = document.createElement("div"); meta.className = "meta";
+        const time = document.createElement("time");
+        const d = new Date(p.timestamp);
+        time.dateTime = p.timestamp;
+        time.textContent = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+        const pc = document.createElement("p"); pc.className = "cap"; pc.textContent = cap;
+        meta.append(time, pc); a.append(img, meta); li.append(a); list.append(li);
+      });
+      document.getElementById("instagram").hidden = false;
+    })
+    .catch(function () { /* feed unavailable: section stays hidden */ });
 
   /* ---------- Sponsor form: builds an email draft ---------- */
   const form = document.getElementById("sponsor-form");
