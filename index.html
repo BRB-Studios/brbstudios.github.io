@@ -387,26 +387,41 @@
     <div><dt>Project</dt><dd class="big">BRB Studios</dd></div>
     <div><dt>Drawn by</dt><dd>BrettRB</dd></div>
     <div><dt>Sheet</dt><dd>1 of 1</dd></div>
-    <div><dt>Rev</dt><dd>6</dd></div>
+    <div><dt>Rev</dt><dd>7</dd></div>
   </dl>
 </footer>
 
 <script>
-  /* ---------- Settings you can change ---------- */
+  /* ---------- Settings ---------- */
 
-  // The video the player shows. To change it, replace the ID between the quotes.
-  // The ID is the part after "v=" in a YouTube link,
-  // e.g. youtube.com/watch?v=abc123XYZ00  ->  "abc123XYZ00"
-  const FEATURED_VIDEO_ID = "enDnooRjxOg";
+  // The featured video is set in the file featured.txt (paste a YouTube link there).
+  // This ID is only used if featured.txt is missing or can't be read.
+  const FALLBACK_VIDEO_ID = "enDnooRjxOg";
 
   const SPONSOR_EMAIL = "brettrbbusiness@gmail.com";
 
   /* ---------- Featured video ---------- */
-  if (FEATURED_VIDEO_ID) {
-    document.getElementById("featured").src =
-      "https://www.youtube.com/embed/" + FEATURED_VIDEO_ID +
-      "?autoplay=1&mute=1&playsinline=1&rel=0";
+  function videoIdFrom(text) {
+    const t = (text || "").trim();
+    const m = t.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);
+    if (m) return m[1];
+    if (/^[A-Za-z0-9_-]{11}$/.test(t)) return t;
+    return null;
   }
+
+  function showVideo(id) {
+    const src = "https://www.youtube.com/embed/" + id + "?autoplay=1&mute=1&playsinline=1&rel=0";
+    const player = document.getElementById("featured");
+    if (player.src !== src) player.src = src;
+  }
+
+  fetch("featured.txt", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .then(function (text) {
+      const line = text.split(/\r?\n/).find(function (l) { return videoIdFrom(l); });
+      showVideo(videoIdFrom(line) || FALLBACK_VIDEO_ID);
+    })
+    .catch(function () { showVideo(FALLBACK_VIDEO_ID); });
 
   /* ---------- Sponsor form: builds an email draft ---------- */
   const form = document.getElementById("sponsor-form");
